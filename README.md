@@ -1,2 +1,0 @@
-# PrivateRoute
-Created with CodeSandbox
