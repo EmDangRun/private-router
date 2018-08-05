@@ -5,31 +5,8 @@ import { Route, Switch, Redirect } from "react-router";
 import * as Containers from "./containers";
 import { Provider } from "react-redux";
 import store from "./store";
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
-const PrivateRoute = ({ component: Compenent, store, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        fakeAuth.isAuthenticated ? (
-          <Compenent {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
-};
+import PrivateRoute from './private_route';
+import './styles.css';
 
 render(
   <Provider store={store}>
@@ -39,8 +16,8 @@ render(
           path="/protected"
           component={Containers.ProtectedPage}
           exact={true}
-          store={store}
         />
+        <Route path="/public" component={Containers.PublicPage} exact={true} />
         <Route path="/login" component={Containers.LoginPage} exact={true} />
         <Route path="/" component={Containers.App} exact={true} />
         <Redirect from="*" to="/" />

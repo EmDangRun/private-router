@@ -1,23 +1,25 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { login } from "../actions/auth";
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      redirectToReferrer: false
-    };
   }
   render() {
     const { from } = this.props.location.state || {
       from: { pathname: "/protected" }
     };
-    const { redirectToReferrer } = this.state;
-    console.log(redirectToReferrer);
-    if (redirectToReferrer) {
-      return <Redirect to={from} />;
+    const { auth } = this.props;
+
+    if(auth.isProcessing){
+      return <div className="loader"></div>
     }
+
+    if (auth.authenticated) {
+      return <Redirect to={from}/>;
+    }
+
     return (
       <Fragment>
         <form action="">
@@ -28,11 +30,12 @@ class LoginPage extends React.Component {
     );
   }
   __handleLogin = () => {
-    setTimeout(this.props.login(), 3000);
+      this.props.login();
   };
 }
+
 function mapStateToProps({ auth }) {
-  console.log("auth", auth);
+  console.log(auth);
   return { auth };
 }
 

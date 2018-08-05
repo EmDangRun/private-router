@@ -6,7 +6,12 @@ class App extends React.Component {
       <Fragment>
         <nav>
           <ul>
-            <Link to="/protected">Go to ProtectedPage</Link>
+            <li>
+              <Link to="/public">Go to PublicPage</Link>
+            </li>
+            <li>
+              <Link to="/protected">Go to ProtectedPage</Link>
+            </li>
           </ul>
         </nav>
       </Fragment>
